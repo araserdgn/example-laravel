@@ -24,6 +24,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('auth')->group(function() {
     Route::post('/register', [UserController::class ,'register']);
     Route::post('/login', [UserController::class ,'login']);
+
+    Route::get('/logout', [UserController::class ,'logout']);
 });
 
 

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\UserResource;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class UserController extends Controller
 {
@@ -63,6 +64,23 @@ class UserController extends Controller
         return apiResponse(__('UNATUHORIZED',401));
     }
 
+
+    public function logout(Request $request)
+    {
+        $user = Auth::guard('api')->user();
+
+        if ($user) {
+            $tokens = $user->tokens;
+
+            foreach ($tokens as $token) {
+                $token->delete();
+            }
+
+            return apiResponse(__('Başarıyla Çıkış Yapıldı.'), 200, ['user' => auth()->user()]);
+        }
+
+        return apiResponse(__('Oturum açmış bir kullanıcı bulunamadı'), 401);
+    }
 
     public function index()
     {

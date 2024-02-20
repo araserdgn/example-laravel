@@ -8,6 +8,7 @@ use App\Services\TodoService;
 use App\Http\Resources\TodoResource;
 use App\Models\Todo;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Middleware\CheckAuthStatus;
 
 class TodoController extends Controller
 {
